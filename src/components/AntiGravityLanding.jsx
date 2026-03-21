@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, QrCode, Shield, Zap, Sparkles, Image as ImageIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Menu, X, ArrowRight, Zap, Shield, Cpu, Layout, Sparkles, QrCode, Palette, Users, Globe, ImageIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
