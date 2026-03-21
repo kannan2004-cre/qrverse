@@ -8,6 +8,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { GeneratePage } from "./pages/GeneratePage";
 import { MyQrsPage } from "./pages/MyQrsPage";
 import { RedirectHandler } from "./pages/RedirectHandler";
+import AntiGravityLanding from "./components/AntiGravityLanding";
 
 function App() {
   return (
@@ -15,8 +16,9 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<AntiGravityLanding />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/old-home" element={<LandingPage />} />
             <Route path="/r/:shortId" element={<RedirectHandler />} />
 
             <Route element={<ProtectedRoute />}>
