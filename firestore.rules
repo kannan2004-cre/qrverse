@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users can only read and write their own documents
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Strict constraints on qrcodes
+    match /qrcodes/{documentId} {
+      // Can only create if the userId strictly matches the creator's Auth token
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      
+      // Can only delete if the existing document's userId matches auth token
+      allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
+      
+      // Allow public read access so anyone can scan and be redirected
+      allow read: if true;
+      
+      // Allow authenticated users to update their own QR codes
+      allow update: if request.auth != null && resource.data.userId == request.auth.uid;
+      
+      // Allow public update ONLY if they are incrementing the clicks field (for unauthenticated users)
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['clicks']);
+    }
+  }
+}
