@@ -23,9 +23,16 @@ const getBase64ImageFromUrl = async (imageUrl) => {
   });
 };
 
-const getSafeQrBase64 = async (qrType, targetUrl, imageUrl) => {
+const getSafeQrBase64 = async (qrType, targetUrl, imageUrl, color = '#0f172a') => {
   if (qrType === 'standard' || !imageUrl) {
-    return await QRCode.toDataURL(targetUrl, { width: 1000, margin: 1 });
+    return await QRCode.toDataURL(targetUrl, { 
+      width: 1000, 
+      margin: 1,
+      color: {
+        dark: color,
+        light: '#ffffff'
+      }
+    });
   }
 
   try {
@@ -47,7 +54,7 @@ const getSafeQrBase64 = async (qrType, targetUrl, imageUrl) => {
   }
 };
 
-export async function exportMerchantPDF(qrType, targetUrl, imageUrl, merchantName) {
+export async function exportMerchantPDF(qrType, targetUrl, imageUrl, merchantName, color = '#0f172a') {
     try {
         const doc = new jsPDF({
             orientation: 'portrait',
@@ -59,7 +66,7 @@ export async function exportMerchantPDF(qrType, targetUrl, imageUrl, merchantNam
         const pageHeight = doc.internal.pageSize.getHeight();
 
         const templateBase64 = await getBase64ImageFromUrl('/QRverse.png');
-        const qrBase64 = await getSafeQrBase64(qrType, targetUrl, imageUrl);
+        const qrBase64 = await getSafeQrBase64(qrType, targetUrl, imageUrl, color);
 
         doc.addImage(templateBase64, 'PNG', 0, 0, pageWidth, pageHeight);
 
@@ -90,7 +97,7 @@ export async function exportMerchantPDF(qrType, targetUrl, imageUrl, merchantNam
 }
 }
 
-export async function exportPersonalPDF(qrType, targetUrl, imageUrl) {
+export async function exportPersonalPDF(qrType, targetUrl, imageUrl, color = '#0f172a') {
     try {
         const doc = new jsPDF({
             orientation: 'portrait',
@@ -102,7 +109,7 @@ export async function exportPersonalPDF(qrType, targetUrl, imageUrl) {
         const pageHeight = doc.internal.pageSize.getHeight();
 
         const templateBase64 = await getBase64ImageFromUrl('/personal.png');
-        const qrBase64 = await getSafeQrBase64(qrType, targetUrl, imageUrl);
+        const qrBase64 = await getSafeQrBase64(qrType, targetUrl, imageUrl, color);
 
         doc.addImage(templateBase64, 'PNG', 0, 0, pageWidth, pageHeight);
 

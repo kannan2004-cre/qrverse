@@ -94,7 +94,7 @@ export function MyQrsPage() {
             if (qr.isMerchantQR) {
                 await exportToPdf(`merchant-export-${qr.id}`, `${qr.merchantName?.replace(/\s+/g, '-') || 'Export'}-QR.pdf`);
             } else {
-                await exportPersonalPDF(qr.qrType, linkToEncode, qr.imageUrl);
+                await exportPersonalPDF(qr.qrType, linkToEncode, qr.imageUrl, qr.color || '#0f172a');
             }
         } catch (err) {
             console.error(err);
@@ -217,13 +217,13 @@ export function MyQrsPage() {
                                         }}
                                     />
                                 ) : (
-                                    <button
-                                        onClick={() => handleDownload(qr)}
-                                        disabled={downloadingId === qr.id || deletingId === qr.id}
-                                        className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg shadow hover:shadow-lg font-medium text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                                    >
-                                        {downloadingId === qr.id ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : 'Download'}
-                                    </button>
+                            <button
+                                onClick={() => handleDownload(qr)}
+                                disabled={downloadingId === qr.id || deletingId === qr.id}
+                                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg shadow hover:shadow-lg font-medium text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {downloadingId === qr.id ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : 'Download'}
+                            </button>
                                 )}
                                 
                                 {qr.isDynamic && (
