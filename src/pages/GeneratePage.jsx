@@ -1,10 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Loader2, Check } from "lucide-react";
+import { Loader2, Check, Shuffle } from "lucide-react";
 import { QRCodeSVG } from 'qrcode.react';
 import { createQrCode } from "../lib/db";
 import { nanoid } from 'nanoid';
 import { cn } from "../utils/cn";
+
+const QR_COLORS = [
+  '#4F46E5', // Indigo
+  '#7C3AED', // Violet
+  '#DB2777', // Pink
+  '#DC2626', // Red
+  '#EA580C', // Orange
+  '#16A34A', // Green
+  '#0284C7', // Light Blue
+  '#0F172A', // Slate Dark
+];
 
 export function GeneratePage() {
     const navigate = useNavigate();
@@ -13,6 +24,7 @@ export function GeneratePage() {
     const [isDynamicQR, setIsDynamicQR] = useState(false);
     const [isMerchantQR, setIsMerchantQR] = useState(false);
     const [merchantName, setMerchantName] = useState("");
+    const [qrColor, setQrColor] = useState(() => QR_COLORS[Math.floor(Math.random() * QR_COLORS.length)]);
 
     const [isGenerating, setIsGenerating] = useState(false);
     const [error, setError] = useState(null);
@@ -46,6 +58,7 @@ export function GeneratePage() {
                     isMerchantQR,
                     merchantName: merchantName || null,
                     clicks: 0,
+                    color: qrColor,
                 });
             } else {
                 await createQrCode({
@@ -53,6 +66,7 @@ export function GeneratePage() {
                     isDynamic: false,
                     isMerchantQR,
                     merchantName: merchantName || null,
+                    color: qrColor,
                 });
             }
 
@@ -183,15 +197,24 @@ export function GeneratePage() {
                                 </span>
                             </div>
                         ) : targetUrl ? (
-                            <QRCodeSVG
-                                value={targetUrl}
-                                size={240}
-                                level="H"
-                                includeMargin={false}
-                                fgColor={isDynamicQR ? "#10b981" : "#0f172a"}
-                                bgColor="#ffffff"
-                                className="w-full h-full p-6"
-                            />
+                            <>
+                                <QRCodeSVG
+                                    value={targetUrl}
+                                    size={240}
+                                    level="H"
+                                    includeMargin={false}
+                                    fgColor={qrColor}
+                                    bgColor="#ffffff"
+                                    className="w-full h-full p-6"
+                                />
+                                <button
+                                    onClick={() => setQrColor(QR_COLORS[Math.floor(Math.random() * QR_COLORS.length)])}
+                                    className="absolute bottom-4 right-4 p-2 bg-primary text-primary-foreground rounded-full shadow-3d hover:translate-y-[-2px] active:translate-y-[2px] transition-all"
+                                    title="Shuffle Color"
+                                >
+                                    <Shuffle className="w-5 h-5" />
+                                </button>
+                            </>
                         ) : (
                             <div className="text-center space-y-2">
                                 <span className="font-extrabold text-xl opacity-30 select-none">Live Preview</span>

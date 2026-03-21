@@ -8,6 +8,17 @@ import { exportToPdf } from "../utils/exportPdf";
 import { exportPersonalPDF } from "../utils/exportMerchantPdf";
 import { Loader2, Trash2, Edit3, Eye } from "lucide-react";
 
+const QR_COLORS = [
+  '#4F46E5', // Indigo
+  '#7C3AED', // Violet
+  '#DB2777', // Pink
+  '#DC2626', // Red
+  '#EA580C', // Orange
+  '#16A34A', // Green
+  '#0284C7', // Light Blue
+  '#0F172A', // Slate Dark
+];
+
 export function MyQrsPage() {
     const [qrs, setQrs] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -154,7 +165,7 @@ export function MyQrsPage() {
                                             size={120}
                                             level="H"
                                             includeMargin={false}
-                                            fgColor={qr.qrType === 'ai' ? "#8b5cf6" : "#0f172a"}
+                                            fgColor={qr.color || (qr.qrType === 'ai' ? "#8b5cf6" : "#0f172a")}
                                             bgColor="#ffffff"
                                             imageSettings={qr.qrType === 'ai' && qr.imageUrl ? {
                                                 src: qr.imageUrl,
