@@ -44,9 +44,11 @@ export function RedirectHandler() {
                         updates.visits = (qrData.visits || 0) + 1;
                     }
                     
+                    console.log("Updating document with:", updates);
                     await updateDoc(qrDoc.ref, updates);
+                    console.log("Successfully updated tracking data:", updates);
                 } catch (clickError) {
-                    console.warn("Failed to increment tracking data (this is okay):", clickError);
+                    console.error("Failed to increment tracking data:", clickError);
                 }
 
                 window.location.replace(targetUrl);
