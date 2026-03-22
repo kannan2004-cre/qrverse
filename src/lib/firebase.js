@@ -25,6 +25,8 @@ isSupported().then((supported) => {
   if (supported) {
     analytics = getAnalytics(app);
   }
+}).catch((error) => {
+  console.warn("Analytics initialization failed:", error);
 });
 
 export default app;
