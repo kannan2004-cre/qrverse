@@ -25,6 +25,7 @@ export function GeneratePage() {
     const [isMerchantQR, setIsMerchantQR] = useState(false);
     const [merchantName, setMerchantName] = useState("");
     const [trackVisitsOnly, setTrackVisitsOnly] = useState(false);
+    const [trackVisits, setTrackVisits] = useState(false);
     const [qrColor, setQrColor] = useState(() => QR_COLORS[Math.floor(Math.random() * QR_COLORS.length)]);
 
     const [isGenerating, setIsGenerating] = useState(false);
@@ -61,6 +62,8 @@ export function GeneratePage() {
                     clicks: 0,
                     color: qrColor,
                     trackVisitsOnly,
+                    trackVisits,
+                    visits: 0,
                 });
             } else {
                 await createQrCode({
@@ -189,6 +192,26 @@ export function GeneratePage() {
                             </p>
                         )}
                     </div>
+
+                    {isDynamicQR && (
+                        <div className="space-y-4">
+                            <label className="flex items-center gap-3 cursor-pointer group">
+                                <div className="relative flex items-center justify-center w-6 h-6">
+                                    <input
+                                        type="checkbox"
+                                        checked={trackVisits}
+                                        onChange={(e) => setTrackVisits(e.target.checked)}
+                                        className="peer appearance-none w-6 h-6 bg-background border-2 border-border rounded-md shadow-inner-3d checked:bg-primary checked:border-primary transition-all cursor-pointer"
+                                    />
+                                    <Check className="absolute w-4 h-4 text-primary-foreground opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" strokeWidth={3} />
+                                </div>
+                                <span className="font-bold text-sm select-none group-hover:text-primary transition-colors">Enable Visit Tracking</span>
+                            </label>
+                            <p className="text-sm text-secondary-foreground pl-9">
+                                Shows a brief redirect screen to users to log analytics.
+                            </p>
+                        </div>
+                    )}
 
                     <button
                         onClick={handleGenerate}
