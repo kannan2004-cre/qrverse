@@ -193,25 +193,36 @@ export function GeneratePage() {
                         )}
                     </div>
 
-                    {isDynamicQR && (
-                        <div className="space-y-4">
-                            <label className="flex items-center gap-3 cursor-pointer group">
-                                <div className="relative flex items-center justify-center w-6 h-6">
-                                    <input
-                                        type="checkbox"
-                                        checked={trackVisits}
-                                        onChange={(e) => setTrackVisits(e.target.checked)}
-                                        className="peer appearance-none w-6 h-6 bg-background border-2 border-border rounded-md shadow-inner-3d checked:bg-primary checked:border-primary transition-all cursor-pointer"
-                                    />
-                                    <Check className="absolute w-4 h-4 text-primary-foreground opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" strokeWidth={3} />
-                                </div>
-                                <span className="font-bold text-sm select-none group-hover:text-primary transition-colors">Enable Visit Tracking</span>
+                    <div className="mt-4 flex flex-col space-y-1">
+                        <div className="flex items-center space-x-2">
+                            <input 
+                                type="checkbox" 
+                                id="trackVisits" 
+                                checked={isDynamicQR ? trackVisits : false} 
+                                disabled={!isDynamicQR}
+                                onChange={(e) => setTrackVisits(e.target.checked)} 
+                                className="w-4 h-4 text-indigo-600 bg-gray-800 border-gray-600 rounded focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                            />
+                            <label 
+                                htmlFor="trackVisits" 
+                                className={`text-sm ${isDynamicQR ? 'text-gray-300' : 'text-gray-500'}`}
+                            >
+                                Enable Interstitial Visit Tracking
                             </label>
-                            <p className="text-sm text-secondary-foreground pl-9">
-                                Shows a brief redirect screen to users to log analytics.
-                            </p>
                         </div>
-                    )}
+                        
+                        {/* Helper text explaining the limitation */}
+                        {!isDynamicQR && (
+                            <p className="text-xs text-amber-500 ml-6">
+                                *Visit tracking requires a Dynamic QR code to route through our servers.
+                            </p>
+                        )}
+                        {isDynamicQR && (
+                            <p className="text-xs text-gray-500 ml-6">
+                                Shows a brief 1.5s redirect screen to log accurate analytics.
+                            </p>
+                        )}
+                    </div>
 
                     <button
                         onClick={handleGenerate}
