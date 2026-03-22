@@ -24,6 +24,7 @@ export function GeneratePage() {
     const [isDynamicQR, setIsDynamicQR] = useState(false);
     const [isMerchantQR, setIsMerchantQR] = useState(false);
     const [merchantName, setMerchantName] = useState("");
+    const [trackVisitsOnly, setTrackVisitsOnly] = useState(false);
     const [qrColor, setQrColor] = useState(() => QR_COLORS[Math.floor(Math.random() * QR_COLORS.length)]);
 
     const [isGenerating, setIsGenerating] = useState(false);
@@ -59,6 +60,7 @@ export function GeneratePage() {
                     merchantName: merchantName || null,
                     clicks: 0,
                     color: qrColor,
+                    trackVisitsOnly,
                 });
             } else {
                 await createQrCode({
@@ -67,6 +69,7 @@ export function GeneratePage() {
                     isMerchantQR,
                     merchantName: merchantName || null,
                     color: qrColor,
+                    trackVisitsOnly,
                 });
             }
 
@@ -165,6 +168,26 @@ export function GeneratePage() {
                                 className="w-full px-5 py-4 bg-background border border-border rounded-2xl shadow-inner-3d focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium"
                             />
                         </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                            <div className="relative flex items-center justify-center w-6 h-6">
+                                <input
+                                    type="checkbox"
+                                    checked={trackVisitsOnly}
+                                    onChange={(e) => setTrackVisitsOnly(e.target.checked)}
+                                    className="peer appearance-none w-6 h-6 bg-background border-2 border-border rounded-md shadow-inner-3d checked:bg-primary checked:border-primary transition-all cursor-pointer"
+                                />
+                                <Check className="absolute w-4 h-4 text-primary-foreground opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" strokeWidth={3} />
+                            </div>
+                            <span className="font-bold text-sm select-none group-hover:text-primary transition-colors">Track Visits Only (No Click Tracking)</span>
+                        </label>
+                        {trackVisitsOnly && (
+                            <p className="text-sm text-secondary-foreground pl-9">
+                                This QR code will only track when users successfully reach your destination page, not when they scan it.
+                            </p>
+                        )}
                     </div>
 
                     <button

@@ -33,12 +33,20 @@ export function RedirectHandler() {
                 const targetUrl = qrData.targetUrl;
 
                 try {
-                    await updateDoc(qrDoc.ref, {
-                        clicks: (qrData.clicks || 0) + 1,
-                        visits: (qrData.visits || 0) + 1
-                    });
+                    const updates = {};
+                    
+                    if (qrData.trackVisitsOnly) {
+                        // Only track visits, not clicks
+                        updates.visits = (qrData.visits || 0) + 1;
+                    } else {
+                        // Track both clicks and visits
+                        updates.clicks = (qrData.clicks || 0) + 1;
+                        updates.visits = (qrData.visits || 0) + 1;
+                    }
+                    
+                    await updateDoc(qrDoc.ref, updates);
                 } catch (clickError) {
-                    console.warn("Failed to increment clicks and visits (this is okay):", clickError);
+                    console.warn("Failed to increment tracking data (this is okay):", clickError);
                 }
 
                 window.location.replace(targetUrl);
