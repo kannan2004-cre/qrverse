@@ -20,10 +20,8 @@ export function DashboardLayout() {
     return (
         <div className="min-h-screen bg-background flex flex-col md:flex-row">
             <aside className="w-full md:w-64 bg-card border-r border-border p-6 flex flex-col shadow-3d z-10">
-                <div className="flex items-center gap-2 mb-8">
-                    <div className="w-8 h-8 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold shadow-inner-3d">
-                        Q
-                    </div>
+                <div className="flex items-center gap-3 mb-8">
+                    <img src="/QRverse.png" alt="QRVerse Logo" className="w-10 h-10 rounded shadow-inner-3d" />
                     <span className="text-xl font-bold tracking-tight">QRVerse</span>
                 </div>
 
