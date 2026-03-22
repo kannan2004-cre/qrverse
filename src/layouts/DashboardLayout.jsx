@@ -20,9 +20,11 @@ export function DashboardLayout() {
     return (
         <div className="min-h-screen bg-background flex flex-col md:flex-row">
             <aside className="w-full md:w-64 bg-card border-r border-border p-6 flex flex-col shadow-3d z-10">
-                <div className="flex items-center gap-3 mb-8">
-                    <img src="/QRverse.png" alt="QRVerse Logo" className="w-10 h-10 rounded shadow-inner-3d" />
-                    <span className="text-xl font-bold tracking-tight">QRVerse</span>
+                <div className="flex items-center gap-3 mb-8 cursor-pointer group" onClick={() => navigate('/')}>
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-600 flex items-center justify-center text-white font-bold group-hover:scale-105 transition-transform shadow-inner-3d">
+                        <QrCode className="w-6 h-6 text-white" />
+                    </div>
+                    <span className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">QRVerse</span>
                 </div>
 
                 <nav className="flex-1 space-y-2">

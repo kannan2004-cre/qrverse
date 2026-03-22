@@ -65,10 +65,10 @@ export function MyQrsPage() {
         }
 
         try {
-            await updateQrCode(editingId, { targetUrl: cleanUrl });
+            await updateQrCode(editingId, { targetUrl: cleanUrl, clicks: 0 });
             setQrs(currentQrs => 
                 currentQrs.map(qr => 
-                    qr.id === editingId ? { ...qr, targetUrl: cleanUrl } : qr
+                    qr.id === editingId ? { ...qr, targetUrl: cleanUrl, clicks: 0 } : qr
                 )
             );
             setEditingId(null);
