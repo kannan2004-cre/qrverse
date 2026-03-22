@@ -195,6 +195,9 @@ export function MyQrsPage() {
                                             <span className="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">
                                                 {qr.clicks || 0} clicks
                                             </span>
+                                            <span className="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400 rounded-full">
+                                                {qr.visits || 0} visits
+                                            </span>
                                         </>
                                     )}
                                     <span className="text-gray-500 dark:text-gray-400">

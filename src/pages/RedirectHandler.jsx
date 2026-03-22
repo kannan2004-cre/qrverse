@@ -34,10 +34,11 @@ export function RedirectHandler() {
 
                 try {
                     await updateDoc(qrDoc.ref, {
-                        clicks: (qrData.clicks || 0) + 1
+                        clicks: (qrData.clicks || 0) + 1,
+                        visits: (qrData.visits || 0) + 1
                     });
                 } catch (clickError) {
-                    console.warn("Failed to increment clicks (this is okay):", clickError);
+                    console.warn("Failed to increment clicks and visits (this is okay):", clickError);
                 }
 
                 window.location.replace(targetUrl);
